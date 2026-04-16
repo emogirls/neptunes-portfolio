@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-handwriting: 'Caveat', cursive;
+
+  --color-paper: #fcfdfa;
+  --color-ink: #1c1b18;
+  --color-accent: #ffb3ba;
+
+  --shadow-sketch: 4px 4px 0px 0px rgba(28, 27, 24, 1);
+  --shadow-sketch-hover: 6px 6px 0px 0px rgba(28, 27, 24, 1);
+
+  --animate-wiggle: wiggle 3s ease-in-out infinite;
+
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    background-image: radial-gradient(#d1cfc7 1px, transparent 0);
+    background-size: 20px 20px;
+  }
+  
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-ink);
+  }
+}
+
+@layer utilities {
+  .border-sketch {
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    border: solid 2px var(--color-ink);
+  }
+
+  .border-sketch-full {
+    border-radius: 4px 6px 5px 6px/5px 5px 6px 4px;
+    border: solid 3px var(--color-ink);
+  }
+  
+  .border-3 {
+    border-width: 3px;
+  }
+}
