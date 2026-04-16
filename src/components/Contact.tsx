@@ -4,7 +4,7 @@ import { Mail, Globe, MessageCircle, PenTool } from "lucide-react";
 export function Contact() {
   return (
     <section id="contact" className="py-32 px-6 md:px-12 bg-white relative overflow-hidden border-t-4 border-ink border-sketch mt-20">
-      
+
       <svg className="absolute left-0 top-0 w-full h-full opacity-[0.03] pointer-events-none" xmlns="http://www.w3.org/2000/svg">
         <pattern id="squiggle" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
           <path d="M0 20 C 10 10, 30 30, 40 20" stroke="currentColor" strokeWidth="2" fill="none" />
@@ -12,9 +12,8 @@ export function Contact() {
         <rect x="0" y="0" width="100%" height="100%" fill="url(#squiggle)" />
       </svg>
 
-      {/* Swirl Doodle */}
-      <motion.svg 
-        className="absolute bottom-16 left-[10%] w-28 h-28 text-ink opacity-70 pointer-events-none -rotate-45" 
+      <motion.svg
+        className="absolute bottom-16 left-[10%] w-28 h-28 text-ink opacity-70 pointer-events-none -rotate-45"
         viewBox="0 0 100 100" fill="none"
         initial={{ opacity: 0, rotate: -90 }}
         whileInView={{ opacity: 0.7, rotate: -45 }}
@@ -24,9 +23,8 @@ export function Contact() {
         <path d="M 20,50 C 20,20 80,20 80,50 C 80,80 40,80 40,50 C 40,30 60,30 60,50 C 60,60 50,60 50,50" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" strokeLinecap="round" strokeLinejoin="round" />
       </motion.svg>
 
-      {/* Extra Triangle Doodle */}
-      <motion.svg 
-        className="absolute top-20 right-[15%] w-16 h-16 text-ink opacity-70 pointer-events-none rotate-12 animate-wiggle" 
+      <motion.svg
+        className="absolute top-20 right-[15%] w-16 h-16 text-ink opacity-70 pointer-events-none rotate-12 animate-wiggle"
         viewBox="0 0 100 100" fill="none"
         initial={{ opacity: 0, x: 20 }}
         whileInView={{ opacity: 0.7, x: 0 }}
@@ -47,7 +45,7 @@ export function Contact() {
           <PenTool className="w-8 h-8 text-ink" />
         </motion.div>
 
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -57,26 +55,26 @@ export function Contact() {
           Let's draw up something great.
         </motion.h2>
 
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-lg text-ink/70 mb-12 max-w-xl mx-auto"
         >
-          I'm currently available for freelance work and full-time opportunities. 
+          I'm currently available for freelance work and full-time opportunities.
           If you have a project that needs a creative touch, drop a message.
         </motion.p>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex flex-col sm:flex-row justify-center items-center gap-6"
         >
-          <a 
-            href="mailto:neptune@muslim.com" 
+          <a
+            href="mailto:neptune@muslim.com"
             className="flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-4 bg-ink text-paper font-semibold border-3 border-ink border-sketch-full hover:bg-white hover:text-ink hover:-translate-y-1 hover:shadow-sketch transition-all cursor-pointer group"
           >
             <Mail className="w-5 h-5 group-hover:rotate-12 transition-transform" />
