@@ -5,8 +5,9 @@ export function Hero() {
   return (
     <section className="min-h-screen flex flex-col items-center justify-center relative px-6 py-20 overflow-hidden">
       
+      {/* Existing Background elements */}
       <motion.div 
-        className="absolute top-20 left-10 md:left-40 opacity-70"
+        className="absolute top-20 left-10 md:left-40 opacity-70 cursor-default"
         initial={{ opacity: 0, rotate: -20 }}
         animate={{ opacity: 0.7, rotate: 0 }}
         transition={{ duration: 1 }}
@@ -18,7 +19,7 @@ export function Hero() {
       </motion.div>
 
       <motion.div 
-        className="absolute bottom-40 right-10 md:right-32 opacity-70"
+        className="absolute bottom-40 right-10 md:right-32 opacity-70 cursor-default"
         initial={{ opacity: 0, rotate: 45 }}
         animate={{ opacity: 0.7, rotate: 20 }}
         transition={{ duration: 1.2, delay: 0.2 }}
@@ -28,6 +29,43 @@ export function Hero() {
           <path d="M30 40 L70 60 M30 60 L70 40" stroke="currentColor" strokeWidth="2" />
         </svg>
       </motion.div>
+
+      {/* NEW DOODLES! */}
+      {/* Coffee Mug */}
+      <motion.div
+        className="absolute top-32 right-[15%] md:right-[25%] opacity-70 pointer-events-none"
+        initial={{ opacity: 0, rotate: -20 }}
+        animate={{ opacity: 0.7, rotate: -12 }}
+        transition={{ duration: 1.5, delay: 0.5 }}
+      >
+        <svg className="w-20 h-20 text-ink" viewBox="0 0 100 100" fill="none">
+          <path d="M 30,30 h 40 v 40 c 0,10 -10,15 -20,15 c -10,0 -20,-5 -20,-15 z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M 70,40 c 15,0 15,20 0,20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M 40,25 c 5,-5 -5,-10 0,-15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M 60,25 c 5,-5 -5,-10 0,-15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </motion.div>
+
+      {/* Cloud */}
+      <motion.svg 
+        className="absolute bottom-24 left-[15%] w-28 h-28 text-ink opacity-70 pointer-events-none" 
+        viewBox="0 0 100 100" fill="none"
+        initial={{ opacity: 0, x: -20, rotate: -6 }}
+        animate={{ opacity: 0.7, x: 0, rotate: -6 }}
+        transition={{ duration: 1.5, delay: 0.7 }}
+      >
+        <path d="M 30,60 C 20,60 15,40 30,40 C 35,25 65,25 70,40 C 85,45 80,60 70,60 Z" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" strokeLinecap="round" strokeLinejoin="round" />
+        <line x1="40" y1="65" x2="60" y2="65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      </motion.svg>
+
+      {/* Star */}
+      <motion.svg 
+        className="absolute top-[45%] right-12 md:right-32 w-12 h-12 text-ink opacity-70 pointer-events-none animate-wiggle" 
+        viewBox="0 0 100 100" fill="none"
+        style={{ animationDelay: '0.5s' }}
+      >
+        <path d="M 50,10 L 60,40 L 90,50 L 60,60 L 50,90 L 40,60 L 10,50 L 40,40 Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </motion.svg>
 
       <div className="z-10 text-center max-w-2xl mx-auto space-y-6">
         <motion.div
@@ -54,7 +92,7 @@ export function Hero() {
       </div>
 
       <motion.div 
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}

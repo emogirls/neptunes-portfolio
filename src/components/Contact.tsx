@@ -12,6 +12,30 @@ export function Contact() {
         <rect x="0" y="0" width="100%" height="100%" fill="url(#squiggle)" />
       </svg>
 
+      {/* Swirl Doodle */}
+      <motion.svg 
+        className="absolute bottom-16 left-[10%] w-28 h-28 text-ink opacity-70 pointer-events-none -rotate-45" 
+        viewBox="0 0 100 100" fill="none"
+        initial={{ opacity: 0, rotate: -90 }}
+        whileInView={{ opacity: 0.7, rotate: -45 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+      >
+        <path d="M 20,50 C 20,20 80,20 80,50 C 80,80 40,80 40,50 C 40,30 60,30 60,50 C 60,60 50,60 50,50" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" strokeLinecap="round" strokeLinejoin="round" />
+      </motion.svg>
+
+      {/* Extra Triangle Doodle */}
+      <motion.svg 
+        className="absolute top-20 right-[15%] w-16 h-16 text-ink opacity-70 pointer-events-none rotate-12 animate-wiggle" 
+        viewBox="0 0 100 100" fill="none"
+        initial={{ opacity: 0, x: 20 }}
+        whileInView={{ opacity: 0.7, x: 0 }}
+        viewport={{ once: true }}
+      >
+        <polygon points="50,20 80,80 20,80" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M 35,70 L 65,70 M 50,40 L 50,60" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </motion.svg>
+
       <div className="max-w-3xl mx-auto text-center relative z-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}

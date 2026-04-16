@@ -6,7 +6,7 @@ const PROJECTS = [
     id: 1,
     title: "sinister.wtf",
     description: "An immersive tool-hub that initially started as a biolink but transpired into a lot of other tools for power users.",
-    tags: ["Next.js", "React", "TSX"],
+    tags: ["Next.js", "React", "TypeScript"],
     color: "bg-ink/5",
     liveDemo: "https://sinister.wtf",
     source: null
@@ -25,12 +25,35 @@ const PROJECTS = [
 export function Projects() {
   return (
     <section id="projects" className="py-24 px-6 md:px-12 max-w-6xl mx-auto relative cursor-default">
-      <svg className="absolute right-0 top-40 w-32 h-64 text-ink/5 -z-10" viewBox="0 0 100 200" fill="none">
-        <path d="M10 10C50 30 90 10 90 50C90 90 10 70 10 110C10 150 90 130 90 170" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round"/>
+      <svg className="absolute right-0 top-40 w-32 h-64 text-ink/5 -z-10 pointer-events-none" viewBox="0 0 100 200" fill="none">
+        <path d="M10 10C50 30 90 10 90 50C90 90 10 70 10 110C10 150 90 130 90 170" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
 
-      <div className="mb-16 text-center">
-        <motion.h2 
+      {/* ZigZag */}
+      <motion.svg
+        className="absolute left-6 top-32 w-20 h-20 text-ink opacity-70 pointer-events-none rotate-[15deg]"
+        viewBox="0 0 100 100" fill="none"
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 0.7, scale: 1 }}
+        viewport={{ once: true }}
+      >
+        <path d="M 10,50 L 30,30 L 50,70 L 70,30 L 90,50" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" strokeLinecap="round" strokeLinejoin="round" />
+      </motion.svg>
+
+      {/* Arrow pointing at works */}
+      <motion.svg
+        className="absolute left-[25%] top-10 w-16 h-16 text-ink opacity-70 pointer-events-none -rotate-12 animate-wiggle"
+        viewBox="0 0 100 100" fill="none"
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 0.7, x: 0 }}
+        viewport={{ once: true }}
+      >
+        <path d="M 20,20 Q 40,60 80,80" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M 60,85 L 80,80 L 75,60" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </motion.svg>
+
+      <div className="mb-16 text-center z-10 relative">
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -54,7 +77,7 @@ export function Projects() {
             <div className="relative z-10 flex flex-col h-full">
               <h3 className="text-2xl font-bold font-handwriting mb-3 mt-2 group-hover:text-amber-700 transition-colors">{project.title}</h3>
               <p className="text-ink/70 mb-6 flex-grow">{project.description}</p>
-              
+
               <div className="mb-6 flex flex-wrap gap-2">
                 {project.tags.map(tag => (
                   <span key={tag} className="text-xs font-medium px-3 py-1 border-2 border-ink/40 border-sketch text-ink/70 bg-gray-50 group-hover:border-ink transition-colors">
@@ -65,12 +88,12 @@ export function Projects() {
 
               <div className="flex gap-4 pt-4 border-t-2 border-dashed border-ink/20">
                 {project.source ? (
-                  <a href={project.source} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-sm font-semibold hover:text-accent transition-colors"><Code className="w-4 h-4"/> Source</a>
+                  <a href={project.source} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-sm font-semibold hover:text-accent transition-colors"><Code className="w-4 h-4" /> Source</a>
                 ) : (
-                  <span className="flex items-center gap-1.5 text-sm font-semibold text-ink/40 cursor-not-allowed"><Code className="w-4 h-4"/> Closed Source</span>
+                  <span className="flex items-center gap-1.5 text-sm font-semibold text-ink/40 cursor-not-allowed"><Code className="w-4 h-4" /> Closed Source</span>
                 )}
                 {project.liveDemo && (
-                  <a href={project.liveDemo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-sm font-semibold hover:text-accent transition-colors"><ExternalLink className="w-4 h-4"/> Live Demo</a>
+                  <a href={project.liveDemo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-sm font-semibold hover:text-accent transition-colors"><ExternalLink className="w-4 h-4" /> Visit</a>
                 )}
               </div>
             </div>

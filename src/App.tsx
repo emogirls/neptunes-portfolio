@@ -13,7 +13,7 @@ function App() {
   });
 
   return (
-    <div className="min-h-screen bg-paper text-ink overflow-x-hidden selection:bg-accent selection:text-ink pb-10">
+    <div className="min-h-screen text-ink overflow-x-hidden selection:bg-accent selection:text-ink pb-10 relative z-0">
       <motion.div 
         className="fixed top-0 left-0 right-0 h-2 bg-ink z-50 origin-left"
         style={{ scaleX }} 
@@ -35,14 +35,6 @@ function App() {
         <Projects />
         <Contact />
       </main>
-      
-      <svg className="fixed top-1/4 left-4 w-12 h-12 text-ink/10 -z-10 pointer-events-none" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="4" strokeDasharray="10 20" fill="none" />
-      </svg>
-      <svg className="fixed bottom-1/4 right-8 w-16 h-16 text-ink/10 -z-10 pointer-events-none rotate-45" viewBox="0 0 100 100">
-        <rect x="20" y="20" width="60" height="60" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-        <line x1="20" y1="20" x2="80" y2="80" stroke="currentColor" strokeWidth="4" />
-      </svg>
     </div>
   )
 }
