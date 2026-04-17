@@ -1,10 +1,13 @@
 import { Hero } from "./components/Hero"
 import { About } from "./components/About"
 import { Projects } from "./components/Projects"
+import { Skills } from "./components/Skills"
 import { Contact } from "./components/Contact"
-import { motion, useScroll, useSpring } from "framer-motion"
+import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion"
+import { useState } from "react"
 
 function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -23,15 +26,40 @@ function App() {
         <a href="#" className="font-handwriting text-2xl font-bold hover:-rotate-2 transition-transform">Neptune.</a>
         <nav className="hidden md:flex gap-6 font-semibold text-sm">
           <a href="#about" className="hover:text-amber-700 transition-colors">About</a>
+          <a href="#skills" className="hover:text-amber-700 transition-colors">Skills</a>
           <a href="#projects" className="hover:text-amber-700 transition-colors">Work</a>
           <a href="#contact" className="hover:text-amber-700 transition-colors">Contact</a>
         </nav>
-        <button className="md:hidden font-handwriting text-xl">Menu</button>
+        <button 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="md:hidden font-handwriting text-xl font-bold cursor-pointer"
+        >
+          {isMenuOpen ? 'Close' : 'Menu'}
+        </button>
       </header>
+
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-30 bg-paper/95 backdrop-blur-md pt-32 px-6 md:hidden border-b-2 border-ink border-sketch"
+          >
+            <nav className="flex flex-col items-center gap-8 text-3xl font-handwriting font-bold">
+              <a href="#about" onClick={() => setIsMenuOpen(false)} className="hover:text-amber-700 transition-colors">About</a>
+              <a href="#skills" onClick={() => setIsMenuOpen(false)} className="hover:text-amber-700 transition-colors">Skills</a>
+              <a href="#projects" onClick={() => setIsMenuOpen(false)} className="hover:text-amber-700 transition-colors">Work</a>
+              <a href="#contact" onClick={() => setIsMenuOpen(false)} className="hover:text-amber-700 transition-colors">Contact</a>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <main>
         <Hero />
         <About />
+        <Skills />
         <Projects />
         <Contact />
       </main>

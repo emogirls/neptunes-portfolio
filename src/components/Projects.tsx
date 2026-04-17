@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Code } from "lucide-react";
+import { ExternalLink, Code, ChevronDown } from "lucide-react";
 
 const PROJECTS = [
   {
@@ -19,6 +19,29 @@ const PROJECTS = [
     color: "bg-accent/40",
     liveDemo: null,
     source: "https://github.com/emogirls/neptunes-portfolio"
+  },
+  {
+    id: 3,
+    title: "Discord Developer (since 2016)",
+    description: "Various discord-related tools and configurations crafted over the years.",
+    details: [
+      "Hundreds of AIO Bots for Server Owners",
+      "Hundreds of tools for automation for power-users",
+      "Custom UserScript for Larping"
+    ],
+    tags: ["Discord API", "Node.js", "Python"],
+    color: "bg-ink/5",
+    liveDemo: null,
+    source: null
+  },
+  {
+    id: 4,
+    title: "Minecraft Plugins",
+    description: "Developed a lot of Custom Minecraft Plugins for Server Owners on Demand.",
+    tags: ["Java", "Spigot", "Paper"],
+    color: "bg-accent/40",
+    liveDemo: null,
+    source: null
   }
 ];
 
@@ -76,9 +99,23 @@ export function Projects() {
           >
             <div className="relative z-10 flex flex-col h-full">
               <h3 className="text-2xl font-bold font-handwriting mb-3 mt-2 group-hover:text-amber-700 transition-colors">{project.title}</h3>
-              <p className="text-ink/70 mb-6 flex-grow">{project.description}</p>
+              <p className={`text-ink/70 ${project.details ? "mb-2" : "mb-6"} flex-grow`}>{project.description}</p>
 
-              <div className="mb-6 flex flex-wrap gap-2">
+              {project.details && (
+                <details className="mb-6 group/details cursor-pointer relative z-20">
+                  <summary className="font-handwriting font-bold flex items-center gap-2 select-none text-amber-900 overflow-hidden hover:text-amber-700 transition-colors list-none">
+                    View Works
+                    <ChevronDown className="w-4 h-4 group-open/details:rotate-180 transition-transform" />
+                  </summary>
+                  <ul className="list-disc pl-5 mt-3 text-sm text-ink/80 space-y-1 font-medium pb-2 border-l-2 border-ink/10 ml-1">
+                    {project.details.map((detail, i) => (
+                      <li key={i}>{detail}</li>
+                    ))}
+                  </ul>
+                </details>
+              )}
+
+              <div className="mb-6 flex flex-wrap gap-2 mt-auto">
                 {project.tags.map(tag => (
                   <span key={tag} className="text-xs font-medium px-3 py-1 border-2 border-ink/40 border-sketch text-ink/70 bg-gray-50 group-hover:border-ink transition-colors">
                     {tag}
@@ -103,3 +140,4 @@ export function Projects() {
     </section>
   )
 }
+

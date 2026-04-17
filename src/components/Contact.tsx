@@ -3,8 +3,7 @@ import { Mail, Globe, MessageCircle, PenTool } from "lucide-react";
 
 export function Contact() {
   return (
-    <section id="contact" className="py-32 px-6 md:px-12 bg-white relative overflow-hidden border-t-4 border-ink border-sketch mt-20">
-
+    <section id="contact" className="py-24 px-6 md:px-12 relative overflow-hidden mt-12 border-t-2 border-dashed border-ink/20">
       <svg className="absolute left-0 top-0 w-full h-full opacity-[0.03] pointer-events-none" xmlns="http://www.w3.org/2000/svg">
         <pattern id="squiggle" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
           <path d="M0 20 C 10 10, 30 30, 40 20" stroke="currentColor" strokeWidth="2" fill="none" />
