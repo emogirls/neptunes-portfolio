@@ -3,9 +3,8 @@ import { motion } from "framer-motion";
 export function About() {
   return (
     <section id="about" className="py-24 px-6 md:px-12 max-w-5xl mx-auto relative cursor-default">
-      {/* Rocket Doodle - Far Right empty space */}
-      <motion.svg 
-        className="absolute -top-16 -right-16 md:-right-32 w-48 h-48 md:w-56 md:h-56 text-ink opacity-60 pointer-events-none rotate-[20deg]" 
+      <motion.svg
+        className="absolute -top-16 -right-16 md:-right-32 w-48 h-48 md:w-56 md:h-56 text-ink opacity-60 pointer-events-none rotate-[20deg]"
         viewBox="0 0 1024 1024" fill="none"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 0.7, y: 0 }}
@@ -30,8 +29,8 @@ export function About() {
       </motion.svg>
 
       <div className="grid md:grid-cols-2 gap-16 items-center">
-        
-        <motion.div 
+
+        <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -55,8 +54,8 @@ export function About() {
           className="space-y-6 relative"
         >
           <svg className="absolute -top-12 -left-16 w-20 h-20 text-accent hidden md:block" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M80 20C60 40 30 60 20 80" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M20 80L35 75M20 80L25 65" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M80 20C60 40 30 60 20 80" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+            <path d="M20 80L35 75M20 80L25 65" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
           </svg>
 
           <h2 className="text-4xl md:text-5xl font-handwriting font-bold">A little about me.</h2>

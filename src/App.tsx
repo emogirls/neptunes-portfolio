@@ -44,7 +44,12 @@ function App() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-30 bg-paper/95 backdrop-blur-md pt-32 px-6 md:hidden border-b-2 border-ink border-sketch"
+            className="fixed inset-0 z-30 pt-32 px-6 md:hidden"
+            style={{
+              backgroundColor: 'var(--color-paper)',
+              backgroundImage: 'linear-gradient(90deg, transparent 4rem, var(--color-accent) 4rem, var(--color-accent) 4.1rem, transparent 4.1rem), linear-gradient(transparent 1.9rem, #d1cfc7 1.9rem, #d1cfc7 2rem, transparent 2rem)',
+              backgroundSize: '100% 100%, 100% 2rem'
+            }}
           >
             <nav className="flex flex-col items-center gap-8 text-3xl font-handwriting font-bold">
               <a href="#about" onClick={() => setIsMenuOpen(false)} className="hover:text-amber-700 transition-colors">About</a>

@@ -14,7 +14,7 @@ const PROJECTS = [
   {
     id: 2,
     title: "this portfolio",
-    description: "A sketch-book respresentation of what I draw during boring classes, my mind at its full boredom.",
+    description: "A sketch-book with everything that means Neptune, through my eyes when I'm bored of classes.",
     tags: ["React", "TypeScript", "Tailwind"],
     color: "bg-accent/40",
     liveDemo: null,
@@ -52,7 +52,7 @@ export function Projects() {
         <path d="M10 10C50 30 90 10 90 50C90 90 10 70 10 110C10 150 90 130 90 170" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
 
-      {/* ZigZag */}
+
       <motion.svg
         className="absolute left-6 top-32 w-20 h-20 text-ink opacity-70 pointer-events-none rotate-[15deg]"
         viewBox="0 0 100 100" fill="none"
@@ -63,7 +63,7 @@ export function Projects() {
         <path d="M 10,50 L 30,30 L 50,70 L 70,30 L 90,50" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" strokeLinecap="round" strokeLinejoin="round" />
       </motion.svg>
 
-      {/* Arrow pointing at works */}
+
       <motion.svg
         className="absolute left-[25%] top-10 w-16 h-16 text-ink opacity-70 pointer-events-none -rotate-12 animate-wiggle"
         viewBox="0 0 100 100" fill="none"
