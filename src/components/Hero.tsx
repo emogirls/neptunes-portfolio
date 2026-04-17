@@ -35,7 +35,7 @@ export function Hero() {
         animate={{ opacity: 0.7, rotate: -12 }}
         transition={{ duration: 1.5, delay: 0.5 }}
       >
-        <svg className="w-20 h-20 text-ink" viewBox="0 0 100 100" fill="none">
+        <svg className="w-20 h-20 text-ink animate-jitter" viewBox="0 0 100 100" fill="none">
           <path d="M 30,30 h 40 v 40 c 0,10 -10,15 -20,15 c -10,0 -20,-5 -20,-15 z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           <path d="M 70,40 c 15,0 15,20 0,20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           <path d="M 40,25 c 5,-5 -5,-10 0,-15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -44,7 +44,7 @@ export function Hero() {
       </motion.div>
 
       <motion.svg
-        className="absolute bottom-24 left-[15%] w-28 h-28 text-ink opacity-70 pointer-events-none"
+        className="absolute bottom-24 left-[15%] w-28 h-28 text-ink opacity-70 pointer-events-none animate-jitter"
         viewBox="0 0 100 100" fill="none"
         initial={{ opacity: 0, x: -20, rotate: -6 }}
         animate={{ opacity: 0.7, x: 0, rotate: -6 }}

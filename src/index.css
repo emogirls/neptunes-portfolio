@@ -12,10 +12,18 @@
   --shadow-sketch-hover: 6px 6px 0px 0px rgba(28, 27, 24, 1);
 
   --animate-wiggle: wiggle 3s ease-in-out infinite;
+  --animate-jitter: jitter 0.3s infinite steps(2) alternate;
 
   @keyframes wiggle {
     0%, 100% { transform: rotate(-2deg); }
     50% { transform: rotate(2deg); }
+  }
+
+  @keyframes jitter {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    33% { transform: translate(-1px, 0px) rotate(0.5deg); }
+    66% { transform: translate(0px, -1px) rotate(-0.5deg); }
+    100% { transform: translate(1px, 1px) rotate(0deg); }
   }
 }
 

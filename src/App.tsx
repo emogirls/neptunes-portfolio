@@ -3,11 +3,22 @@ import { About } from "./components/About"
 import { Projects } from "./components/Projects"
 import { Skills } from "./components/Skills"
 import { Contact } from "./components/Contact"
+import { LoadingScreen } from "./components/LoadingScreen"
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = isLoading ? 'hidden' : 'unset';
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [isLoading]);
+
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -17,6 +28,10 @@ function App() {
 
   return (
     <div className="min-h-screen text-ink overflow-x-hidden selection:bg-accent selection:text-ink pb-10 relative z-0">
+      <AnimatePresence>
+        {isLoading && <LoadingScreen />}
+      </AnimatePresence>
+
       <motion.div 
         className="fixed top-0 left-0 right-0 h-2 bg-ink z-50 origin-left"
         style={{ scaleX }} 
