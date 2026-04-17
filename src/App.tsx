@@ -12,12 +12,11 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = isLoading ? 'hidden' : 'unset';
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 3000);
     return () => clearTimeout(timer);
-  }, [isLoading]);
+  }, []);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -32,9 +31,9 @@ function App() {
         {isLoading && <LoadingScreen />}
       </AnimatePresence>
 
-      <motion.div 
+      <motion.div
         className="fixed top-0 left-0 right-0 h-2 bg-ink z-50 origin-left"
-        style={{ scaleX }} 
+        style={{ scaleX }}
       />
 
       <header className="fixed top-6 left-6 right-6 flex justify-between items-center z-40 px-6 py-4 bg-paper/80 backdrop-blur-sm border-2 border-ink border-sketch-full shadow-sketch">
@@ -45,7 +44,7 @@ function App() {
           <a href="#projects" className="hover:text-amber-700 transition-colors">Work</a>
           <a href="#contact" className="hover:text-amber-700 transition-colors">Contact</a>
         </nav>
-        <button 
+        <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="md:hidden font-handwriting text-xl font-bold cursor-pointer"
         >

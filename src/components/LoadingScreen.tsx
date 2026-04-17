@@ -11,11 +11,26 @@ function getPointAtProgress(pathEl: SVGPathElement, t: number) {
 export function LoadingScreen() {
   const pathRef = useRef<SVGPathElement>(null);
 
-  const crayonX = useMotionValue(-60);
+  const crayonX = useMotionValue(10);
   const crayonY = useMotionValue(50);
   const crayonRotate = useMotionValue(45);
   const progress = useMotionValue(0);
   const pathLength = useTransform(progress, [0, 1], [0, 1]);
+
+  useEffect(() => {
+    const scrollY = window.scrollY;
+    const prevStyle = document.body.getAttribute("style") ?? "";
+
+    document.body.setAttribute(
+      "style",
+      `overflow:hidden!important;position:fixed!important;top:-${scrollY}px!important;left:0!important;width:100%!important;`
+    );
+
+    return () => {
+      document.body.setAttribute("style", prevStyle);
+      window.scrollTo(0, scrollY);
+    };
+  }, []);
 
   useEffect(() => {
     const controls = animate(progress, 1, {
@@ -27,7 +42,6 @@ export function LoadingScreen() {
         const ptAhead = getPointAtProgress(pathRef.current, Math.min(latest + 0.015, 1));
         const dx = ptAhead.x - pt.x;
         const dy = ptAhead.y - pt.y;
-        // The crayon SVG points down-right naturally, rotate to match tangent
         const angle = Math.atan2(dy, dx) * (180 / Math.PI) + 45;
         crayonX.set(pt.x);
         crayonY.set(pt.y);
@@ -37,41 +51,65 @@ export function LoadingScreen() {
     return () => controls.stop();
   }, []);
 
-  // The SVG viewBox is 0 0 540 100, rendered at w-full h-32 (128px)
-  // We need to convert path coords → pixel offsets within that container
-  // preserveAspectRatio="none" means linear scale
-  // We'll use percentage-based positioning via transforms instead
   const VBOX_W = 540;
   const VBOX_H = 100;
-
-  // icon is 28px, offset so tip (bottom-right of the pen icon) is at the draw point
   const ICON_SIZE = 28;
 
-  const crayonLeft = useTransform(crayonX, x => `calc(${(x / VBOX_W) * 100}% - ${ICON_SIZE * 0.85}px)`);
-  const crayonTop = useTransform(crayonY, y => `calc(${(y / VBOX_H) * 100}% - ${ICON_SIZE * 0.85}px)`);
+  const crayonLeft = useTransform(
+    crayonX,
+    x => `calc(${(x / VBOX_W) * 100}% - ${ICON_SIZE * 0.85}px)`
+  );
+  const crayonTop = useTransform(
+    crayonY,
+    y => `calc(${(y / VBOX_H) * 100}% - ${ICON_SIZE * 0.85}px)`
+  );
 
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center p-6"
-      style={{
-        backgroundColor: 'var(--color-paper)',
-        backgroundImage:
-          'linear-gradient(90deg, transparent 4rem, var(--color-accent) 4rem, var(--color-accent) 4.1rem, transparent 4.1rem), linear-gradient(transparent 1.9rem, #d1cfc7 1.9rem, #d1cfc7 2rem, transparent 2rem)',
-        backgroundSize: '100% 100%, 100% 2rem',
-      }}
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: "100%",
+        height: "100%",
+        minHeight: "100dvh",
+        zIndex: 9999,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "1.5rem",
+        overflowY: "hidden",
+        touchAction: "none",
+        userSelect: "none",
+        backgroundColor: "var(--color-paper)",
+        backgroundImage:
+          "linear-gradient(90deg, transparent 4rem, var(--color-accent) 4rem, var(--color-accent) 4.1rem, transparent 4.1rem), " +
+          "linear-gradient(transparent 1.9rem, #d1cfc7 1.9rem, #d1cfc7 2rem, transparent 2rem)",
+        backgroundSize: "100% 100%, 100% 2rem",
+      }}
     >
-      <div className="relative flex flex-col items-center max-w-lg w-full">
-        {/* Drawing area */}
-        <div className="relative w-full" style={{ height: 128 }}>
+      <div
+        style={{
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "100%",
+          maxWidth: "32rem",
+        }}
+      >
+        <div style={{ position: "relative", width: "100%", height: 128 }}>
           <svg
             viewBox="0 0 540 100"
-            className="w-full h-full"
+            style={{ width: "100%", height: "100%" }}
             preserveAspectRatio="none"
           >
-            {/* Hidden reference path for getPointAtLength */}
             <path
               ref={pathRef}
               d={PATH}
@@ -79,7 +117,6 @@ export function LoadingScreen() {
               stroke="transparent"
               strokeWidth="0"
             />
-            {/* Animated drawn path */}
             <motion.path
               d={PATH}
               fill="transparent"
@@ -91,17 +128,16 @@ export function LoadingScreen() {
             />
           </svg>
 
-          {/* Crayon icon — absolutely positioned, tracks the path tip */}
           <motion.div
             style={{
-              position: 'absolute',
+              position: "absolute",
               left: crayonLeft,
               top: crayonTop,
               width: ICON_SIZE,
               height: ICON_SIZE,
               rotate: crayonRotate,
-              transformOrigin: '85% 85%',
-              pointerEvents: 'none',
+              transformOrigin: "85% 85%",
+              pointerEvents: "none",
             }}
           >
             <svg
@@ -123,10 +159,16 @@ export function LoadingScreen() {
         </div>
 
         <motion.h2
-          className="font-handwriting text-4xl font-bold mt-8 text-ink"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
+          style={{
+            fontFamily: "var(--font-handwriting)",
+            fontSize: "2.25rem",
+            fontWeight: 700,
+            marginTop: "2rem",
+            color: "var(--color-ink)",
+          }}
         >
           Drawing something great...
         </motion.h2>
