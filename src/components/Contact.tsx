@@ -12,7 +12,8 @@ export function Contact() {
       </svg>
 
       <motion.svg
-        className="absolute bottom-16 left-[10%] w-28 h-28 text-ink opacity-70 pointer-events-none -rotate-45"
+        className="absolute bottom-16 left-[10%] w-28 h-28 text-ink opacity-70 pointer-events-none -rotate-45 animate-jitter"
+        style={{ animationDelay: '0.4s' }}
         viewBox="0 0 100 100" fill="none"
         initial={{ opacity: 0, rotate: -90 }}
         whileInView={{ opacity: 0.7, rotate: -45 }}
@@ -23,7 +24,8 @@ export function Contact() {
       </motion.svg>
 
       <motion.svg
-        className="absolute top-20 right-[15%] w-16 h-16 text-ink opacity-70 pointer-events-none rotate-12 animate-wiggle"
+        className="absolute top-20 right-[15%] w-16 h-16 text-ink opacity-70 pointer-events-none rotate-12 animate-jitter"
+        style={{ animationDelay: '1.1s' }}
         viewBox="0 0 100 100" fill="none"
         initial={{ opacity: 0, x: 20 }}
         whileInView={{ opacity: 0.7, x: 0 }}

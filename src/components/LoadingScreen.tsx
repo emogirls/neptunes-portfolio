@@ -2,21 +2,19 @@ import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 const PATH = "M 10 50 C 60 0, 90 100, 140 50 C 190 0, 220 100, 270 50 C 320 0, 350 100, 400 50 C 450 0, 480 100, 530 50";
-const VIEWBOX_WIDTH = 540;
-const VIEWBOX_HEIGHT = 100;
 
-function getPointAtLength(pathEl: SVGPathElement, t: number) {
+function getPointAtProgress(pathEl: SVGPathElement, t: number) {
   const total = pathEl.getTotalLength();
   return pathEl.getPointAtLength(t * total);
 }
 
 export function LoadingScreen() {
   const pathRef = useRef<SVGPathElement>(null);
-  const crayonX = useMotionValue(10);
-  const crayonY = useMotionValue(50);
-  const crayonRotate = useMotionValue(-45);
-  const progress = useMotionValue(0);
 
+  const crayonX = useMotionValue(-60);
+  const crayonY = useMotionValue(50);
+  const crayonRotate = useMotionValue(45);
+  const progress = useMotionValue(0);
   const pathLength = useTransform(progress, [0, 1], [0, 1]);
 
   useEffect(() => {
@@ -25,52 +23,63 @@ export function LoadingScreen() {
       ease: "easeInOut",
       onUpdate(latest) {
         if (!pathRef.current) return;
-        const pt = getPointAtLength(pathRef.current, latest);
-        const ptAhead = getPointAtLength(pathRef.current, Math.min(latest + 0.01, 1));
+        const pt = getPointAtProgress(pathRef.current, latest);
+        const ptAhead = getPointAtProgress(pathRef.current, Math.min(latest + 0.015, 1));
         const dx = ptAhead.x - pt.x;
         const dy = ptAhead.y - pt.y;
-        const angle = Math.atan2(dy, dx) * (180 / Math.PI) - 45;
+        // The crayon SVG points down-right naturally, rotate to match tangent
+        const angle = Math.atan2(dy, dx) * (180 / Math.PI) + 45;
         crayonX.set(pt.x);
         crayonY.set(pt.y);
         crayonRotate.set(angle);
-      }
+      },
     });
     return () => controls.stop();
   }, []);
 
-  const SVG_W = 500;
-  const SCALE_X = SVG_W / VIEWBOX_WIDTH;
-  const SCALE_Y = 128 / VIEWBOX_HEIGHT;
+  // The SVG viewBox is 0 0 540 100, rendered at w-full h-32 (128px)
+  // We need to convert path coords → pixel offsets within that container
+  // preserveAspectRatio="none" means linear scale
+  // We'll use percentage-based positioning via transforms instead
+  const VBOX_W = 540;
+  const VBOX_H = 100;
 
-  const crayonSvgX = useTransform(crayonX, x => x * SCALE_X - 16);
-  const crayonSvgY = useTransform(crayonY, y => y * SCALE_Y - 16);
+  // icon is 28px, offset so tip (bottom-right of the pen icon) is at the draw point
+  const ICON_SIZE = 28;
+
+  const crayonLeft = useTransform(crayonX, x => `calc(${(x / VBOX_W) * 100}% - ${ICON_SIZE * 0.85}px)`);
+  const crayonTop = useTransform(crayonY, y => `calc(${(y / VBOX_H) * 100}% - ${ICON_SIZE * 0.85}px)`);
 
   return (
     <motion.div
       className="fixed inset-0 z-[100] flex flex-col items-center justify-center p-6"
       style={{
         backgroundColor: 'var(--color-paper)',
-        backgroundImage: 'linear-gradient(90deg, transparent 4rem, var(--color-accent) 4rem, var(--color-accent) 4.1rem, transparent 4.1rem), linear-gradient(transparent 1.9rem, #d1cfc7 1.9rem, #d1cfc7 2rem, transparent 2rem)',
-        backgroundSize: '100% 100%, 100% 2rem'
+        backgroundImage:
+          'linear-gradient(90deg, transparent 4rem, var(--color-accent) 4rem, var(--color-accent) 4.1rem, transparent 4.1rem), linear-gradient(transparent 1.9rem, #d1cfc7 1.9rem, #d1cfc7 2rem, transparent 2rem)',
+        backgroundSize: '100% 100%, 100% 2rem',
       }}
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
     >
       <div className="relative flex flex-col items-center max-w-lg w-full">
+        {/* Drawing area */}
         <div className="relative w-full" style={{ height: 128 }}>
           <svg
-            viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`}
-            className="w-full h-full overflow-visible"
+            viewBox="0 0 540 100"
+            className="w-full h-full"
             preserveAspectRatio="none"
           >
+            {/* Hidden reference path for getPointAtLength */}
             <path
               ref={pathRef}
               d={PATH}
-              fill="transparent"
+              fill="none"
               stroke="transparent"
               strokeWidth="0"
             />
+            {/* Animated drawn path */}
             <motion.path
               d={PATH}
               fill="transparent"
@@ -82,29 +91,35 @@ export function LoadingScreen() {
             />
           </svg>
 
-          {/* Crayon SVG icon following the path */}
-          <motion.svg
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            fill="none"
+          {/* Crayon icon — absolutely positioned, tracks the path tip */}
+          <motion.div
             style={{
               position: 'absolute',
-              left: crayonSvgX,
-              top: crayonSvgY,
+              left: crayonLeft,
+              top: crayonTop,
+              width: ICON_SIZE,
+              height: ICON_SIZE,
               rotate: crayonRotate,
-              transformOrigin: '16px 16px',
+              transformOrigin: '85% 85%',
+              pointerEvents: 'none',
             }}
           >
-            {/* Crayon body */}
-            <rect x="9" y="2" width="6" height="14" rx="1" fill="var(--color-accent)" stroke="var(--color-ink)" strokeWidth="1.5" />
-            {/* Crayon tip */}
-            <path d="M9 16 L12 22 L15 16 Z" fill="#e8c080" stroke="var(--color-ink)" strokeWidth="1.5" strokeLinejoin="round" />
-            {/* Crayon label band */}
-            <rect x="9" y="11" width="6" height="2.5" fill="white" opacity="0.5" />
-            {/* Crayon top flat end */}
-            <rect x="9" y="2" width="6" height="2" rx="1" fill="var(--color-ink)" opacity="0.2" />
-          </motion.svg>
+            <svg
+              width={ICON_SIZE}
+              height={ICON_SIZE}
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                stroke="var(--color-ink)"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </motion.div>
         </div>
 
         <motion.h2
