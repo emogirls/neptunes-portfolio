@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-
+import { SpotifyPresence } from "./SpotifyPresence";
 export function About() {
   return (
     <section id="about" className="py-24 px-6 md:px-12 max-w-5xl mx-auto relative cursor-default">
@@ -57,6 +57,10 @@ export function About() {
             <p>
               When I'm not pushing pixels or playing with TypeScript, you can probably find me gaming, spilling coffee on myself and trying to understand why penguins simply can't fly :(.
             </p>
+            
+            <div className="pt-2">
+              <SpotifyPresence />
+            </div>
           </div>
 
           <div className="pt-4 flex flex-col sm:flex-row gap-4">
