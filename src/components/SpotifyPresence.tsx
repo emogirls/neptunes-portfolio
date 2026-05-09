@@ -48,7 +48,7 @@ export function SpotifyPresence() {
     let heartbeat: ReturnType<typeof setInterval>;
 
     const connect = () => {
-      ws = new WebSocket('wss://spotify.sinister.wtf/socket');
+      ws = new WebSocket('wss://api.lanyard.rest/socket');
 
       ws.onmessage = (event) => {
         const msg = JSON.parse(event.data);
@@ -201,7 +201,7 @@ export function SpotifyPresence() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -5 }}
                 transition={{ duration: 0.3 }}
-                className="text-sm font-handwriting italic text-amber-700 font-bold"
+                className="text-sm font-medium text-amber-700"
               >
                 "{currentLyric}"
               </motion.div>
