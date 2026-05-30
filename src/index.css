@@ -26,6 +26,7 @@
     box-sizing: border-box;
   }
 
+
   body {
     background-color: #05050f;
     color: var(--color-text-primary);

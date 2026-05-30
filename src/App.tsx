@@ -5,6 +5,7 @@ import { Skills } from "./components/Skills"
 import { Contact } from "./components/Contact"
 import { LoadingScreen } from "./components/LoadingScreen"
 import { Background } from "./components/Background"
+import { SmoothScroll } from "./components/SmoothScroll"
 import { motion, AnimatePresence } from "framer-motion"
 import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
@@ -103,13 +104,15 @@ function App() {
         )}
       </AnimatePresence>
 
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Contact />
-      </main>
+      <SmoothScroll>
+        <main>
+          <Hero />
+          <About />
+          <Skills />
+          <Projects />
+          <Contact />
+        </main>
+      </SmoothScroll>
     </div>
   )
 }
