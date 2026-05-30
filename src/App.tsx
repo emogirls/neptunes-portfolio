@@ -14,12 +14,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000); // Shorter loading for cleaner feel
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -36,7 +30,7 @@ function App() {
     <div className="min-h-screen text-text-primary overflow-x-hidden pb-10 relative z-0">
       <Background />
       <AnimatePresence>
-        {isLoading && <LoadingScreen />}
+        {isLoading && <LoadingScreen onDone={() => setIsLoading(false)} />}
       </AnimatePresence>
 
       <header className="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-3xl z-40 px-2 py-2 glass-panel rounded-full flex justify-between md:justify-center items-center gap-8 transition-all duration-300">
@@ -104,7 +98,7 @@ function App() {
         )}
       </AnimatePresence>
 
-      <SmoothScroll>
+      <SmoothScroll disabled={isLoading}>
         <main>
           <Hero />
           <About />
