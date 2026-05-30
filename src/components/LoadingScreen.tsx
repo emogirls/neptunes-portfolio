@@ -1,31 +1,16 @@
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import { useEffect, useRef } from "react";
-
-const PATH = "M 10 50 C 60 0, 90 100, 140 50 C 190 0, 220 100, 270 50 C 320 0, 350 100, 400 50 C 450 0, 480 100, 530 50";
-
-function getPointAtProgress(pathEl: SVGPathElement, t: number) {
-  const total = pathEl.getTotalLength();
-  return pathEl.getPointAtLength(t * total);
-}
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export function LoadingScreen() {
-  const pathRef = useRef<SVGPathElement>(null);
-
-  const crayonX = useMotionValue(10);
-  const crayonY = useMotionValue(50);
-  const crayonRotate = useMotionValue(45);
-  const progress = useMotionValue(0);
-  const pathLength = useTransform(progress, [0, 1], [0, 1]);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const scrollY = window.scrollY;
     const prevStyle = document.body.getAttribute("style") ?? "";
-
     document.body.setAttribute(
       "style",
       `overflow:hidden!important;position:fixed!important;top:-${scrollY}px!important;left:0!important;width:100%!important;`
     );
-
     return () => {
       document.body.setAttribute("style", prevStyle);
       window.scrollTo(0, scrollY);
@@ -33,145 +18,51 @@ export function LoadingScreen() {
   }, []);
 
   useEffect(() => {
-    const controls = animate(progress, 1, {
-      duration: 2,
-      ease: "easeInOut",
-      onUpdate(latest) {
-        if (!pathRef.current) return;
-        const pt = getPointAtProgress(pathRef.current, latest);
-        const ptAhead = getPointAtProgress(pathRef.current, Math.min(latest + 0.015, 1));
-        const dx = ptAhead.x - pt.x;
-        const dy = ptAhead.y - pt.y;
-        const angle = Math.atan2(dy, dx) * (180 / Math.PI) + 45;
-        crayonX.set(pt.x);
-        crayonY.set(pt.y);
-        crayonRotate.set(angle);
-      },
-    });
-    return () => controls.stop();
+    const interval = setInterval(() => {
+      setProgress(p => {
+        if (p >= 100) { clearInterval(interval); return 100; }
+        return Math.min(p + Math.floor(Math.random() * 12) + 4, 100);
+      });
+    }, 120);
+    return () => clearInterval(interval);
   }, []);
-
-  const VBOX_W = 540;
-  const VBOX_H = 100;
-  const ICON_SIZE = 28;
-
-  const crayonLeft = useTransform(
-    crayonX,
-    x => `calc(${(x / VBOX_W) * 100}% - ${ICON_SIZE * 0.85}px)`
-  );
-  const crayonTop = useTransform(
-    crayonY,
-    y => `calc(${(y / VBOX_H) * 100}% - ${ICON_SIZE * 0.85}px)`
-  );
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.8, ease: "easeInOut" }}
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        width: "100%",
-        height: "100%",
-        minHeight: "100dvh",
-        zIndex: 9999,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "1.5rem",
-        overflowY: "hidden",
-        touchAction: "none",
-        userSelect: "none",
-        backgroundColor: "var(--color-paper)",
-        backgroundImage:
-          "linear-gradient(90deg, transparent 4rem, var(--color-accent) 4rem, var(--color-accent) 4.1rem, transparent 4.1rem), " +
-          "linear-gradient(transparent 1.9rem, #d1cfc7 1.9rem, #d1cfc7 2rem, transparent 2rem)",
-        backgroundSize: "100% 100%, 100% 2rem",
-      }}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
+      style={{ background: '#0c0810' }}
     >
-      <div
-        style={{
-          position: "relative",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "100%",
-          maxWidth: "32rem",
-        }}
-      >
-        <div style={{ position: "relative", width: "100%", height: 128 }}>
-          <svg
-            viewBox="0 0 540 100"
-            style={{ width: "100%", height: "100%" }}
-            preserveAspectRatio="none"
-          >
-            <path
-              ref={pathRef}
-              d={PATH}
-              fill="none"
-              stroke="transparent"
-              strokeWidth="0"
-            />
-            <motion.path
-              d={PATH}
-              fill="transparent"
-              stroke="var(--color-ink)"
-              strokeWidth="6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{ pathLength }}
-            />
-          </svg>
+      <div className="flex flex-col items-center gap-8 w-full max-w-xs px-6">
+        
+        {/* Minimalist Logo / N */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-4xl font-bold tracking-widest text-white/90"
+        >
+          N
+        </motion.div>
 
-          <motion.div
-            style={{
-              position: "absolute",
-              left: crayonLeft,
-              top: crayonTop,
-              width: ICON_SIZE,
-              height: ICON_SIZE,
-              rotate: crayonRotate,
-              transformOrigin: "85% 85%",
-              pointerEvents: "none",
-            }}
-          >
-            <svg
-              width={ICON_SIZE}
-              height={ICON_SIZE}
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
-                stroke="var(--color-ink)"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </motion.div>
+        {/* Progress bar */}
+        <div className="w-full space-y-3">
+          <div className="flex justify-between items-center px-1">
+            <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/50">Initializing</span>
+            <span className="text-[10px] font-medium tracking-widest text-white/50">{Math.min(progress, 100)}%</span>
+          </div>
+          <div className="w-full h-[2px] bg-white/10 overflow-hidden relative">
+            <motion.div
+              className="absolute inset-y-0 left-0 bg-white/80"
+              initial={{ width: "0%" }}
+              animate={{ width: `${Math.min(progress, 100)}%` }}
+              transition={{ ease: "easeOut", duration: 0.15 }}
+            />
+          </div>
         </div>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          style={{
-            fontFamily: "var(--font-handwriting)",
-            fontSize: "2.25rem",
-            fontWeight: 700,
-            marginTop: "2rem",
-            color: "var(--color-ink)",
-          }}
-        >
-          Drawing something great...
-        </motion.h2>
       </div>
     </motion.div>
   );

@@ -4,8 +4,10 @@ import { Projects } from "./components/Projects"
 import { Skills } from "./components/Skills"
 import { Contact } from "./components/Contact"
 import { LoadingScreen } from "./components/LoadingScreen"
-import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion"
+import { Background } from "./components/Background"
+import { motion, AnimatePresence } from "framer-motion"
 import { useState, useEffect } from "react"
+import { Disc, Menu, X } from "lucide-react"
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,7 +16,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 2000); // Shorter loading for cleaner feel
     return () => clearTimeout(timer);
   }, []);
 
@@ -29,58 +31,68 @@ function App() {
     };
   }, [isMenuOpen]);
 
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
   return (
-    <div className="min-h-screen text-ink overflow-x-hidden selection:bg-accent selection:text-ink pb-10 relative z-0">
+    <div className="min-h-screen text-text-primary overflow-x-hidden pb-10 relative z-0">
+      <Background />
       <AnimatePresence>
         {isLoading && <LoadingScreen />}
       </AnimatePresence>
 
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-2 bg-ink z-50 origin-left"
-        style={{ scaleX }}
-      />
+      <header className="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-4xl z-40 px-6 py-3 glass-panel rounded-full flex justify-between items-center transition-all duration-300">
+        <div className="flex items-center gap-6">
+          <a href="#" className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center overflow-hidden">
+              <img src="/favicon.png" alt="Avatar" className="w-full h-full object-cover" />
+            </div>
+            <span className="font-semibold text-lg tracking-wide text-white">Neptune</span>
+          </a>
+          <nav className="hidden md:flex gap-6 text-sm font-medium text-white/60">
+            <a href="#about" className="hover:text-white transition-colors">About</a>
+            <a href="#skills" className="hover:text-white transition-colors">Skills</a>
+            <a href="#projects" className="hover:text-white transition-colors">Projects</a>
+          </nav>
+        </div>
 
-      <header className="fixed top-6 left-6 right-6 flex justify-between items-center z-40 px-6 py-4 bg-paper/80 backdrop-blur-sm border-2 border-ink border-sketch-full shadow-sketch">
-        <a href="#" className="font-handwriting text-2xl font-bold hover:-rotate-2 transition-transform">Neptune.</a>
-        <nav className="hidden md:flex gap-6 font-semibold text-sm">
-          <a href="#about" className="hover:text-amber-700 transition-colors">About</a>
-          <a href="#skills" className="hover:text-amber-700 transition-colors">Skills</a>
-          <a href="#projects" className="hover:text-amber-700 transition-colors">Work</a>
-          <a href="#contact" className="hover:text-amber-700 transition-colors">Contact</a>
-        </nav>
+        <div className="hidden md:flex items-center gap-3">
+          <a href="https://discord.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full glass-button flex items-center justify-center text-white/70 hover:text-white">
+            <Disc className="w-4 h-4" />
+          </a>
+          <a href="#contact" className="glass-button px-4 py-2 rounded-full text-sm font-medium text-white flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+            Available
+          </a>
+        </div>
+
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden font-handwriting text-xl font-bold cursor-pointer"
+          className="md:hidden text-white/80 hover:text-white transition-colors p-2"
         >
-          {isMenuOpen ? 'Close' : 'Menu'}
+          {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </header>
 
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-30 pt-32 px-6 md:hidden h-[100dvh] overflow-hidden"
-            style={{
-              backgroundColor: 'var(--color-paper)',
-              backgroundImage: 'linear-gradient(90deg, transparent 4rem, var(--color-accent) 4rem, var(--color-accent) 4.1rem, transparent 4.1rem), linear-gradient(transparent 1.9rem, #d1cfc7 1.9rem, #d1cfc7 2rem, transparent 2rem)',
-              backgroundSize: '100% 100%, 100% 2rem'
-            }}
+            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(16px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            className="fixed inset-0 z-30 pt-32 px-6 md:hidden h-[100dvh] overflow-hidden bg-space/60"
           >
-            <nav className="flex flex-col items-center gap-8 text-3xl font-handwriting font-bold">
-              <a href="#about" onClick={() => setIsMenuOpen(false)} className="hover:text-amber-700 transition-colors">About</a>
-              <a href="#skills" onClick={() => setIsMenuOpen(false)} className="hover:text-amber-700 transition-colors">Skills</a>
-              <a href="#projects" onClick={() => setIsMenuOpen(false)} className="hover:text-amber-700 transition-colors">Work</a>
-              <a href="#contact" onClick={() => setIsMenuOpen(false)} className="hover:text-amber-700 transition-colors">Contact</a>
+            <nav className="flex flex-col items-center justify-center h-full gap-8 text-xl font-medium tracking-wide">
+              <a href="#about" onClick={() => setIsMenuOpen(false)} className="hover:text-white text-white/70 transition-colors">About</a>
+              <a href="#skills" onClick={() => setIsMenuOpen(false)} className="hover:text-white text-white/70 transition-colors">Skills</a>
+              <a href="#projects" onClick={() => setIsMenuOpen(false)} className="hover:text-white text-white/70 transition-colors">Projects</a>
+              <a href="#contact" onClick={() => setIsMenuOpen(false)} className="hover:text-white text-white/70 transition-colors">Contact</a>
+              
+              <div className="flex gap-4 mt-8">
+                 <a href="https://github.com/emogirls" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full glass-button flex items-center justify-center text-white/70 hover:text-white font-bold">
+                  GH
+                 </a>
+                 <a href="https://twitter.com" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full glass-button flex items-center justify-center text-white/70 hover:text-white font-bold">
+                  X
+                 </a>
+              </div>
             </nav>
           </motion.div>
         )}

@@ -1,100 +1,59 @@
 import { motion } from "framer-motion";
-import { MoveDown } from "lucide-react";
+import { ChevronDown, ArrowRight, Layers } from "lucide-react";
 
 export function Hero() {
   return (
     <section className="min-h-screen flex flex-col items-center justify-center relative px-6 py-20 overflow-hidden">
+      
+      {/* Subtle glow behind the main text */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full blur-[120px] pointer-events-none" />
 
-      <motion.div
-        className="absolute top-20 left-10 md:left-40 opacity-70 cursor-default"
-        initial={{ opacity: 0, rotate: -20 }}
-        animate={{ opacity: 0.7, rotate: 0 }}
-        transition={{ duration: 1 }}
-      >
-        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" className="text-accent animate-wiggle">
-          <path d="M10 32C10 32 20 12 32 12C44 12 54 32 54 32C54 32 44 52 32 52C20 52 10 32 10 32Z" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-          <circle cx="32" cy="32" r="6" fill="currentColor" />
-        </svg>
-      </motion.div>
-
-      <motion.div
-        className="absolute bottom-40 right-10 md:right-32 opacity-70 cursor-default"
-        initial={{ opacity: 0, rotate: 45 }}
-        animate={{ opacity: 0.7, rotate: 20 }}
-        transition={{ duration: 1.2, delay: 0.2 }}
-      >
-        <svg width="100" height="100" viewBox="0 0 100 100" fill="none" className="text-ink animate-wiggle" style={{ animationDelay: '1s' }}>
-          <path d="M20 50C20 50 30 20 50 20C70 20 80 50 80 50S70 80 50 80C30 80 20 50 20 50Z" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" />
-          <path d="M30 40 L70 60 M30 60 L70 40" stroke="currentColor" strokeWidth="2" />
-        </svg>
-      </motion.div>
-
-      <motion.div
-        className="absolute top-32 right-[15%] md:right-[25%] opacity-70 pointer-events-none"
-        initial={{ opacity: 0, rotate: -20 }}
-        animate={{ opacity: 0.7, rotate: -12 }}
-        transition={{ duration: 1.5, delay: 0.5 }}
-      >
-        <svg className="w-20 h-20 text-ink animate-jitter" viewBox="0 0 100 100" fill="none">
-          <path d="M 30,30 h 40 v 40 c 0,10 -10,15 -20,15 c -10,0 -20,-5 -20,-15 z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M 70,40 c 15,0 15,20 0,20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M 40,25 c 5,-5 -5,-10 0,-15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M 60,25 c 5,-5 -5,-10 0,-15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </motion.div>
-
-      <motion.svg
-        className="absolute bottom-24 left-[15%] w-28 h-28 text-ink opacity-70 pointer-events-none animate-jitter"
-        viewBox="0 0 100 100" fill="none"
-        initial={{ opacity: 0, x: -20, rotate: -6 }}
-        animate={{ opacity: 0.7, x: 0, rotate: -6 }}
-        transition={{ duration: 1.5, delay: 0.7 }}
-      >
-        <path d="M 30,60 C 20,60 15,40 30,40 C 35,25 65,25 70,40 C 85,45 80,60 70,60 Z" stroke="currentColor" strokeWidth="2" strokeDasharray="6 6" strokeLinecap="round" strokeLinejoin="round" />
-        <line x1="40" y1="65" x2="60" y2="65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      </motion.svg>
-
-      <motion.svg
-        className="absolute top-[45%] right-12 md:right-32 w-12 h-12 text-ink opacity-70 pointer-events-none animate-wiggle"
-        viewBox="0 0 100 100" fill="none"
-        style={{ animationDelay: '0.5s' }}
-      >
-        <path d="M 50,10 L 60,40 L 90,50 L 60,60 L 50,90 L 40,60 L 10,50 L 40,40 Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      </motion.svg>
-
-      <div className="z-10 text-center max-w-2xl mx-auto space-y-6">
+      <div className="z-10 text-center max-w-4xl mx-auto space-y-6 relative flex flex-col items-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative inline-block"
         >
-          <h1 className="text-6xl md:text-8xl font-handwriting font-bold tracking-tight text-ink relative z-10">
-            Hi, I'm Neptune
+          <h1 className="text-6xl md:text-[8rem] font-bold tracking-tight text-gradient leading-none">
+            Neptune
           </h1>
-          <div className="absolute -bottom-4 -right-8 -left-8 h-8 bg-accent/40 border-[3px] border-ink -rotate-2 z-0 border-sketch-full" />
         </motion.div>
 
         <motion.p
-          className="text-lg md:text-xl text-ink/80 mt-8 font-medium leading-relaxed"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-lg md:text-xl text-white/50 max-w-2xl font-medium tracking-wide"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
-          I draw outside the lines and code outside the box.<br />
-          Crafting digital experiences with a human touch.
+          Software engineer focused on building robust architectures <br className="hidden md:block"/> and crafting elegant digital experiences.
         </motion.p>
+
+        <motion.div
+          className="flex flex-col sm:flex-row items-center gap-4 pt-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <a href="#projects" className="glass-button px-6 py-3 rounded-xl font-medium text-white flex items-center gap-2 hover:bg-white/10 transition-colors">
+            <Layers className="w-5 h-5 text-white/70" />
+            View Projects
+          </a>
+          <a href="#contact" className="glass-button px-6 py-3 rounded-xl font-medium text-white/70 flex items-center gap-2 hover:text-white transition-colors">
+            <ArrowRight className="w-5 h-5" />
+            Contact Me
+          </a>
+        </motion.div>
       </div>
 
       <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
       >
-        <a href="#about" className="flex flex-col items-center gap-2 text-ink/60 hover:text-ink transition-colors cursor-pointer group">
-          <span className="font-handwriting text-xl">Scroll down</span>
-          <MoveDown className="w-5 h-5 group-hover:translate-y-2 transition-transform" />
+        <a href="#about" className="flex flex-col items-center gap-2 text-white/30 hover:text-white transition-colors cursor-pointer group">
+          <ChevronDown className="w-6 h-6 group-hover:translate-y-2 transition-transform" />
         </a>
       </motion.div>
 
