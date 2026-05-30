@@ -289,26 +289,26 @@ export function LoadingScreen({ onDone }: LoadingScreenProps) {
       {phase === "cross" && (
         <motion.div
           key="cross"
-          className="fixed inset-0 z-[9999]"
+          className="fixed z-[9999] flex items-center justify-center bg-black"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          style={{ background: "#000" }}
+          style={{ top: "-50vh", bottom: "-50vh", left: "-50vw", right: "-50vw" }}
         >
-          <canvas ref={canvasRef} className="w-full h-full" />
+          <canvas ref={canvasRef} style={{ width: '100vw', height: '100vh' }} />
         </motion.div>
       )}
 
       {phase === "exit" && (
         <motion.div
           key="exit"
-          className="fixed inset-0 z-[9998] pointer-events-none"
+          className="fixed z-[9998] pointer-events-none flex items-center justify-center bg-black"
           initial={{ opacity: 1 }}
           animate={{ opacity: 0 }}
           transition={{ duration: 0.85, ease: "easeInOut" }}
-          style={{ background: "#000" }}
+          style={{ top: "-50vh", bottom: "-50vh", left: "-50vw", right: "-50vw" }}
         >
-          <canvas ref={burstRef} className="w-full h-full" />
+          <canvas ref={burstRef} style={{ width: '100vw', height: '100vh' }} />
         </motion.div>
       )}
     </AnimatePresence>
