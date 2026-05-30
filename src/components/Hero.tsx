@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ChevronDown, ArrowRight, Layers } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 export function Hero() {
   return (
@@ -8,41 +8,33 @@ export function Hero() {
       {/* Subtle glow behind the main text */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="z-10 text-center max-w-4xl mx-auto space-y-6 relative flex flex-col items-center">
+      <div className="z-10 w-full max-w-5xl mx-auto flex flex-col justify-center relative px-6 md:px-0">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative flex flex-col items-center mb-2"
+          className="flex flex-col items-start w-full"
         >
-          <h1 className="text-6xl md:text-[8rem] font-bold tracking-tight text-gradient leading-none">
+          <h1 className="text-6xl md:text-[9rem] font-bold tracking-tighter text-white leading-none mb-12 ml-[-4px]">
             Neptune
           </h1>
-        </motion.div>
+          
+          <div className="w-full flex flex-col md:flex-row md:items-center justify-between border-t border-white/20 pt-8 gap-8">
+            <p className="text-xl md:text-2xl text-white/50 font-light tracking-wide max-w-xl leading-relaxed">
+              <span className="text-white/90 font-medium">Software engineer</span> focused on building robust architectures and crafting elegant digital experiences.
+            </p>
 
-        <motion.p
-          className="text-lg md:text-xl text-white/50 max-w-2xl font-light tracking-wide leading-relaxed"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <span className="text-white/80 font-medium">Software engineer</span> focused on building robust architectures <br className="hidden md:block"/> and crafting elegant digital experiences.
-        </motion.p>
-
-        <motion.div
-          className="flex flex-col sm:flex-row items-center gap-4 pt-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          <a href="#projects" className="glass-button px-6 py-3 rounded-xl font-medium text-white flex items-center gap-2 hover:bg-white/10 transition-colors">
-            <Layers className="w-5 h-5 text-white/70" />
-            View Projects
-          </a>
-          <a href="#contact" className="glass-button px-6 py-3 rounded-xl font-medium text-white/70 flex items-center gap-2 hover:text-white transition-colors">
-            <ArrowRight className="w-5 h-5" />
-            Contact Me
-          </a>
+            <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0 pt-4 md:pt-0">
+              <a href="#projects" className="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-white/10 bg-white/[0.02] font-medium text-white/60 hover:text-white hover:border-white/30 hover:bg-white/5 transition-all duration-300 text-xs uppercase tracking-[0.15em] flex items-center justify-center gap-3 group">
+                <span className="w-1 h-1 bg-white/30 rounded-full group-hover:bg-white/70 transition-colors"></span>
+                Projects
+              </a>
+              <a href="#contact" className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white text-black font-bold hover:bg-white/80 transition-all duration-300 text-xs uppercase tracking-[0.15em] flex items-center justify-center gap-3">
+                <span className="w-1 h-1 bg-black rounded-full animate-pulse"></span>
+                Contact
+              </a>
+            </div>
+          </div>
         </motion.div>
       </div>
 
