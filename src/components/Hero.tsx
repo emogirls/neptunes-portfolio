@@ -13,7 +13,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative inline-block"
+          className="relative flex flex-col items-center mb-2"
         >
           <h1 className="text-6xl md:text-[8rem] font-bold tracking-tight text-gradient leading-none">
             Neptune
@@ -21,12 +21,12 @@ export function Hero() {
         </motion.div>
 
         <motion.p
-          className="text-lg md:text-xl text-white/50 max-w-2xl font-medium tracking-wide"
+          className="text-lg md:text-xl text-white/50 max-w-2xl font-light tracking-wide leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          Software engineer focused on building robust architectures <br className="hidden md:block"/> and crafting elegant digital experiences.
+          <span className="text-white/80 font-medium">Software engineer</span> focused on building robust architectures <br className="hidden md:block"/> and crafting elegant digital experiences.
         </motion.p>
 
         <motion.div

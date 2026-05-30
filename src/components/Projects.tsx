@@ -20,13 +20,14 @@ const PROJECTS = [
   },
   {
     id: 3,
-    title: "Discord Integrations",
-    description: "Developed numerous automation tools, custom Discord integrations, and bots focusing on scalability and user engagement.",
+    title: "FIRST Tech Challenge 2026",
+    description: "2nd Place World Championship Contender. FTC is an international robotics competition where teams design, build, and program robots to compete in complex head-to-head challenges.",
     details: [
-      "Custom bots for community management",
-      "Automation tools for streamlined operations"
+      "Lead Developer for the Autonomous Phase",
+      "Engineered precise autonomous routines using sensor fusion and computer vision",
+      "Developed robust control systems for consistent robot navigation"
     ],
-    tags: ["Discord API", "Node.js", "Python"],
+    tags: ["Java", "Robotics", "Computer Vision", "Control Systems"],
     liveDemo: null,
     source: null
   },
