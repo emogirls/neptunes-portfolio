@@ -10,6 +10,7 @@ interface LyricLine {
 
 function parseLRC(lrc: string): LyricLine[] {
   return lrc.split('\n').reduce<LyricLine[]>((acc, line) => {
+    // Standard format matching
     const match = line.match(/\[(\d{2}):(\d{2})\.(\d{2,3})\](.*)/);
     if (match) {
       const time =
@@ -41,25 +42,32 @@ export function SpotifyPresence() {
         const data = await res.json();
         const hit = data?.find?.((t: { syncedLyrics?: string }) => t.syncedLyrics);
         setLyrics(hit ? parseLRC(hit.syncedLyrics) : []);
-      } catch { setLyrics([]); }
+      } catch { 
+        setLyrics([]);
+      }
     })();
     return () => controller.abort();
   }, [spotify?.track_id]);
 
   // ── Active lyric ticker ────────────────────────────────────────────────
+  const startTime = spotify?.timestamps?.start;
+
   useEffect(() => {
-    if (!spotify) return;
+    if (!startTime || lyrics.length === 0) {
+      setCurrentLyric('');
+      return;
+    }
     const id = setInterval(() => {
-      const sec = (Date.now() - spotify.timestamps.start) / 1000;
+      const sec = (Date.now() - startTime) / 1000;
       let active = '';
       for (const line of lyrics) {
         if (sec >= line.time) active = line.text;
         else break;
       }
       setCurrentLyric(active);
-    }, 200);
+    }, 150); 
     return () => clearInterval(id);
-  }, [spotify, lyrics]);
+  }, [startTime, lyrics]);
 
   // ── Not listening ──────────────────────────────────────────────────────
   if (!spotify) {
@@ -103,16 +111,16 @@ export function SpotifyPresence() {
           {spotify.artist}
         </div>
 
-        <div className="mt-1.5 min-h-[1.1rem]">
-          <AnimatePresence mode="wait">
+        <div className="mt-1.5 min-h-[1.1rem] relative">
+          <AnimatePresence mode="popLayout">
             {currentLyric && (
               <motion.div
                 key={currentLyric}
-                initial={{ opacity: 0, y: 3 }}
+                initial={{ opacity: 0, y: 4 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="text-xs italic text-white/45 font-light truncate"
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.25 }}
+                className="text-xs italic text-white/45 font-light truncate w-full"
               >
                 {currentLyric}
               </motion.div>

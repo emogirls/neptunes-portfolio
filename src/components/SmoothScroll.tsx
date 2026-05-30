@@ -36,6 +36,9 @@ export function SmoothScroll({ children, disabled = false }: SmoothScrollProps) 
       if (container) {
         document.body.style.height = '';
         container.style.position = '';
+        container.style.top = '';
+        container.style.left = '';
+        container.style.width = '';
         container.style.transform = '';
       }
       return;
