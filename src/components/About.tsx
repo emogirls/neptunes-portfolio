@@ -13,27 +13,34 @@ export function About() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="relative group w-full md:w-1/3"
+          className="relative w-full md:w-1/3"
         >
-          <div className="glass-panel rounded-3xl p-6 relative z-10 flex flex-col justify-between overflow-hidden">
-            <div className="flex justify-between items-start pb-4">
-              <span className="text-xs tracking-widest text-white/50 font-medium">PROFILE</span>
-              <span className="text-xs tracking-widest text-white/70 font-medium flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
-                AVAILABLE
-              </span>
-            </div>
+          {/* Premium Unified Profile Card */}
+          <div className="glass-panel p-2 rounded-[32px] relative z-10 flex flex-col gap-2">
             
-            <div className="w-full relative overflow-hidden group my-4 rounded-xl flex items-center justify-center">
-              <img src="/favicon.png" alt="Profile" className="w-full h-auto object-contain opacity-90 group-hover:scale-105 transition-transform duration-700 rounded-xl" />
+            {/* Image Container */}
+            <div className="w-full aspect-[4/5] md:aspect-square rounded-[24px] overflow-hidden relative group">
+              <img 
+                src="/favicon.png" 
+                alt="Profile" 
+                className="w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105" 
+              />
+              {/* Inner vignette for depth */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-black/0 pointer-events-none opacity-80" />
             </div>
 
-            <div className="pt-4 flex justify-between items-end">
-              <div className="text-[10px] text-white/50 tracking-[0.2em] uppercase font-medium">
-                Location: Global<br/>
-                Role: Software Engineer
+            {/* Typography Section */}
+            <div className="flex justify-between items-start px-4 py-3">
+              <div className="space-y-1">
+                <p className="text-white/30 text-[9px] uppercase tracking-[0.2em] font-semibold">Location</p>
+                <p className="text-white/90 text-sm font-medium">Global</p>
+              </div>
+              <div className="space-y-1 text-right">
+                <p className="text-white/30 text-[9px] uppercase tracking-[0.2em] font-semibold">Role</p>
+                <p className="text-white/90 text-sm font-medium">Software Engineer</p>
               </div>
             </div>
+
           </div>
         </motion.div>
 

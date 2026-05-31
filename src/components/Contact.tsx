@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import { Mail, Globe, MessageCircle, Radio } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function Contact() {
   return (
-    <section id="contact" className="py-32 px-6 md:px-12 relative">
-      <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
-        
+    <section id="contact" className="py-32 px-6 md:px-12 relative overflow-hidden">
+      <div className="max-w-3xl mx-auto text-center flex flex-col items-center relative z-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -62,8 +62,12 @@ export function Contact() {
         </motion.div>
       </div>
 
-      <div className="mt-32 text-center text-[11px] font-medium tracking-widest uppercase text-white/30">
+      <div className="mt-32 text-center text-[11px] font-medium tracking-widest uppercase text-white/30 relative z-10 flex flex-col sm:flex-row justify-center items-center gap-4">
         <p>&copy; {new Date().getFullYear()} Neptune. All rights reserved.</p>
+        <span className="hidden sm:block w-1 h-1 rounded-full bg-white/20" />
+        <Link to="/privacy" className="hover:text-white/60 transition-colors">
+          Privacy Policy
+        </Link>
       </div>
     </section>
   )
