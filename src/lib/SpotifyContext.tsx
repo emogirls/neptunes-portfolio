@@ -19,28 +19,29 @@ export function SpotifyProvider({ children }: { children: React.ReactNode }) {
   const [spotify, setSpotify] = useState<SpotifyData | null>(null);
 
   useEffect(() => {
-    let ws: WebSocket;
-    let heartbeat: ReturnType<typeof setInterval>;
+    let isMounted = true;
+    const DISCORD_USER_ID = '654019669543354409';
 
-    const connect = () => {
-      ws = new WebSocket('wss://api.lanyard.rest/socket');
-      ws.onmessage = (event) => {
-        const msg = JSON.parse(event.data);
-        if (msg.op === 1) {
-          ws.send(JSON.stringify({ op: 2, d: { subscribe_to_id: '654019669543354409' } }));
-          heartbeat = setInterval(() => {
-            if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ op: 3 }));
-          }, msg.d.heartbeat_interval);
-        } else if (msg.op === 0 && (msg.t === 'INIT_STATE' || msg.t === 'PRESENCE_UPDATE')) {
-          const user = msg.t === 'INIT_STATE' ? (msg.d['654019669543354409'] || msg.d) : msg.d;
-          setSpotify(user?.spotify ?? null);
+    const fetchPresence = async () => {
+      try {
+        const response = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
+        if (!response.ok) return;
+        const json = await response.json();
+        if (isMounted && json.success) {
+          setSpotify(json.data?.spotify ?? null);
         }
-      };
-      ws.onclose = () => { clearInterval(heartbeat); setTimeout(connect, 5000); };
+      } catch (err) {
+        console.error('Failed to fetch Lanyard Spotify presence:', err);
+      }
     };
 
-    connect();
-    return () => { ws?.close(); clearInterval(heartbeat); };
+    fetchPresence();
+    const interval = setInterval(fetchPresence, 2000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, []);
 
   return (
